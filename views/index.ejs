@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<!-- Style goes here -->
+	<link rel="stylesheet" type="text/css" href="/css/research.css">
+</head>
+<body>
+	<div id="bar-wrapper">
+		<div id="top">
+
+		</div>
+		<div id="nav">
+			<% include partials/nav.ejs %>
+		</div>
+	</div>
+	<div id="content-wrapper">
+		<div id="side">
+			<% if (page === 'home') { %>
+				<% include partials/home/side.ejs %>
+			<% } else if (page === 'activeNav') { %>
+			<% include partials/activeNav/side.ejs %>
+			<% } %>
+		</div>
+		<div id="main">
+
+		</div>
+	</div>
+
+<!-- JS goes here -->
+<script src="/js/jquery-1.11.3.min.js"></script>
+<script src='https://code.responsivevoice.org/responsivevoice.js'></script>
+
+<script src="/js/research.js"></script>
+
+<script src="/js/nav.js"></script>
+<% if (page === 'home') { %>
+				
+<% } else if (page === 'activeNav') { %>
+
+<% } %>
+<!-- break it down into a more modular view. I should be able to plug and play entire sections, which means different views will have different partials for stylesheets, JS, etc (although the JS ones would be included at the bottom here) -->
+
+</body>
+</html>
