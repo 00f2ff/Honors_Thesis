@@ -22,5 +22,5 @@ app.get('/activeNav', function(req, res) {
 	res.render('index', {page: 'activeNav', data: {}}); // update this to take in info about that particular link
 });
 
-app.listen(50000);
-console.log("Server listening at http://localhost:50000/");
+app.listen(50001);
+console.log("Server listening at http://localhost:50001/");

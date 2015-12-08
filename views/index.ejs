@@ -23,7 +23,7 @@
 			<% } %>
 		</div>
 		<div id="main">
-
+			<% include partials/main.ejs %>
 		</div>
 	</div>
 
@@ -35,10 +35,11 @@
 
 <script src="/js/nav.js"></script>
 <% if (page === 'home') { %>
-				
+			
 <% } else if (page === 'activeNav') { %>
 
 <% } %>
+<script src="/js/main.js"></script>
 <!-- break it down into a more modular view. I should be able to plug and play entire sections, which means different views will have different partials for stylesheets, JS, etc (although the JS ones would be included at the bottom here) -->
 
 </body>
