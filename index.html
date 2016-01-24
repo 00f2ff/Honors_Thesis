@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Shopping</title>
+	<link rel="stylesheet" type="text/css" href="research.css">
+</head>
+<body>
+	<div id="search">
+		<div id="title">Shopping</div>
+		<div id="search-bar">
+			<form>
+				<input type="text" />
+			</form>
+			<div id="search-icon"></div>
+		</div>
+	</div>
+	<div id="content-wrapper">
+		<!-- link list -->
+		<div id="link_list"> <!-- I'm probably going to empty this and build in JS -->
+			<ul>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a></li>
+				<li><a href="#">Link</a></li>
+			</ul>
+		</div>
+		<!-- table -->
+		<div id="table">
+		<!-- Will be different for Home / Suggestion vs Product -->
+			<!-- I found that sites like Amazon and Etsy never show more than 3 products per row, so I'm going to reverse rows and columns; Q, A and Z will access indexes 0, 1 and 2, respectively, and hovering over keys to the right will show products farther down the page -->			
+		</div>
+	</div>
+
+<!-- such javascript -->
+<script src="scripts/jquery-1.11.3.min.js"></script>
+<script src="scripts/table.js"></script>
+<script src="scripts/etsy.js"></script>
+<script src='https://code.responsivevoice.org/responsivevoice.js'></script> <!-- find out if google is better -->
+</body>
+</html>
