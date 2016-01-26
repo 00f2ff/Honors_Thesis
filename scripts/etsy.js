@@ -1,7 +1,5 @@
 $(function() {
 
-	var api_key = 'cefqoyf7qi0j9mmy8zs0s1su';
-
 	function findActiveListings() {
 		var query = 'https://openapi.etsy.com/v2/listings/active.js?limit=30&api_key=' + api_key;
 		$.ajax({
