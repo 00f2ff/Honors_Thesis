@@ -87,7 +87,7 @@ body {
 	text-align: center;
 }
 
-.cell.invisible {
+.invisible {
 	opacity: 0;
 }
 
