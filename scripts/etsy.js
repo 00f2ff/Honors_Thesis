@@ -11,6 +11,7 @@ $(function() {
 					console.log(data);
 					var table = new Table(data.results);
 					table.generateGrid();
+					table.generateHoverGrid();
 				} else {
 					console.log(data.error);
 				}

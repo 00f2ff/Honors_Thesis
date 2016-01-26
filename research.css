@@ -64,3 +64,43 @@ body {
 	width: 310px;
 	background-color: pink;
 }
+
+
+#overlay {
+	position: absolute;
+}
+
+.hover-row {
+	/*float: left;*/
+	margin-bottom: calc(70px * 0.25); /* will have to rearrange based on actual keyboard layout */
+	height: 70px;
+}
+
+.cell {
+	float: left;
+	margin-right: calc(70px * 0.25);
+	height: 70px;
+	width: 70px;
+	background-color: blue;
+	opacity: 0.05;
+	line-height: 70px;
+	text-align: center;
+}
+
+.cell.invisible {
+	opacity: 0;
+}
+
+.first-row {
+	
+}
+
+.hover-row:nth-child(2) {
+	margin-left: calc(70px * 0.25);
+}
+.hover-row:nth-child(3) {
+	margin-left: calc(70px * 0.5);
+}
+.hover-row:nth-child(4) {
+	margin-left: calc(70px * 0.75);
+}
