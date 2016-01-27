@@ -1,51 +1,61 @@
 function LinkList(categories) {
-	this.categories = categories;
+	// Convert all categories into cells
+	for (var i = 0; i < categories.length; i++) {
+		cell = this.createCell(categories[i].long_name, categories[i].category_id);
+		categories[i] = cell;
+	}
+	// Distribute cells between activeQueue and inactiveQueue
+	this.inactiveQueue = categories.splice(6); // all cells past index 5
+	this.activeQueue = categories;
+	this.previouslyActiveQueue = [];
+}
+
+// NOTE: Create a cell class that takes an object parameter and works for both Table and LinkList
+LinkList.prototype.createCell = function(name, category_id) {
+	var cell = $('<div class="cell"></div>');
+	// add click handler to proper route here
+	cell.attr({
+		'data-name': name,
+		'data-category_id': category_id
+	}).on('mouseover', function() {
+		$(this).css('background-color', 'yellow');
+		console.log($(this).data('name'));
+		console.log($(this).data('category_id'));
+		console.log('-----');
+	}).on('mouseout', function() {
+		$(this).css('background-color', 'blue');
+	});
+	return cell;
+}
+
+LinkList.prototype.generateUI = function() {
+	// Loop through activeQueue, appending cells to hover-row and cell name to <ul> (within <li>)
+	for (var i = 0; i < this.activeQueue.length; i++) {
+		// add cell to first hover-row (reserved for numbers);
+		$($('.hover-row')[0]).append(this.activeQueue[i]);
+		// add name to <ul>
+		$('#link_list ul').append($('<li>'+this.activeQueue[i].data('name')+'</li>'));
+	}
+}
+
+/*
+ * Pops first <li> and cell elements and pushes new ones
+ * React might work well here but I'm not going to use it for simplicity's sake
+ */
+LinkList.prototype.left = function() {
+	// remove cell and li
+	$($('.hover-row')[0]).children("a:first").remove();
+	$('#link_list ul').children("a:first").remove();
+	// move cells between queues (right now this just keeps data accurate; I don't need a full refresh option)
+	this.previouslyActiveQueue.push(this.activeQueue.shift());
+	this.activeQueue.push(this.inactiveQueue.shift());
+	// add cell and li to end of hover-row and <ul>
+	$($('.hover-row')[0]).append(this.activeQueue[this.activeQueue.length-1]);
+	$('#link_list ul').append($('<li>'+this.activeQueue[this.activeQueue.length-1].data('name')+'</li>'));
 }
 
 // TODO: figure out how to properly link to categories such that I can access their featured products or whatever. 
 // TODO: add title to each page. Maybe an h1 or something. access could be through `
-// Note that this isn't a real link; it will just trigger an AJAX call in Etsy.js to repopulate the LinkList and Table
-LinkList.prototype.generateList = function() {
-	for (var i = 0; i < this.categories.length; i++) {
-		var link = $('<li>'+this.categories[i].long_name+'</li>');
-		
-		if (i > 5) {
-			link.addClass('invisible');
-		}
-		$('#link_list ul').append(link);
-	}
-}
+// NOTE: links are not real; they will just trigger an AJAX call in Etsy.js to repopulate the LinkList and Table
+// TODO: consider cutting off listing titles after 5 words since they go on forever and it might harm the study
 
-LinkList.prototype.generateHoverList = function() {
-	for (var i = 0; i < this.categories.length; i++) {
-		var cell = $('<div class="cell"></div>');
-		// add click handler to proper route here
-		cell.attr({
-			'data-name': this.categories[i].long_name,
-			'data-category_id': this.categories[i].category_id
-		}).on('mouseover', function() {
-			$(this).css('background-color', 'yellow');
-			console.log($(this).data('name'));
-			console.log($(this).data('category_id'));
-			console.log('-----');
-		}).on('mouseout', function() {
-			$(this).css('background-color', 'blue');
-		});
-		// make some cells transparent if the number of categories exceeds 6
-		if (i > 5) {
-			cell.addClass('invisible');
-		}
-		// add cells to first hover-row (reserved for numbers);
-		$($('.hover-row')[0]).append(cell);
-
-	}
-}			
-
-
-/*
-Right now the entire screen layout gets messed up because I'm loading in too many categories. Even though they're invisible, 
-they still occupy space on the screen. A better method may be to stick those DOM elements (including table ones too) into a 
-queue and sometimes pops onto the visible list. I could also design it as a circular linked list, but
-that could potentially be weird since users would be able to lose their place. I could fix that problem by creating a stack
-that stores links popped off the other side (would that be a stack? draw this)
-*/
