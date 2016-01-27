@@ -54,7 +54,8 @@ Table.prototype.generateUI = function() {
 				// this is a semi-arbitrary decision that mainly helps with debugging.
 				// while real UIs will incorporate lazy-loading, they don't remove previous content from the screen
 				row.append(product);
-				$($('.hover-row')[c+1]).append(cell);
+				// $($('.hover-row')[c+1]).append(cell);
+				$('.hover-row:nth-child('+(2+c)+')').append(cell); // 2+c because :nth-child(1) refers to first child
 			}	
 		}
 		$('#table').append(row);
@@ -73,7 +74,7 @@ Table.prototype.right = function() {
 			this.previouslyActiveQueue[i].push(leftCells[i]);
 			var rightCell = this.inactiveQueue[i].shift();
 			// add cell to end of hover-row and product to row
-			$($('.hover-row')[i+1]).append(rightCell);
+			$('.hover-row:nth-child('+(2+i)+')').append(rightCell);
 			row.append(this.createProduct(rightCell.data('title'), rightCell.data('price')));
 		}
 		// add row to dom
@@ -93,7 +94,7 @@ Table.prototype.left = function() {
 			this.inactiveQueue[i].unshift(rightCells[i]); // unshift inserts element in first index
 			var leftCell = this.previouslyActiveQueue[i].pop();
 			// add cell to beginning of hover-row and product to row
-			$($('.hover-row')[i+1]).prepend(leftCell);
+			$('.hover-row:nth-child('+(2+i)+')').prepend(leftCell);
 			row.append(this.createProduct(leftCell.data('title'), leftCell.data('price')));
 		}
 		// add row to dom
