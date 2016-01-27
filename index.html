@@ -28,7 +28,7 @@
 	</div>
 	<div id="content-wrapper">
 		<!-- link list -->
-		<div id="link_list"> <!-- I'm probably going to empty this and build in JS -->
+		<div id="link_list">
 			<ul></ul>
 		</div>
 		<!-- table -->
@@ -48,11 +48,33 @@
 <script src="scripts/etsy.js"></script>
 <script src='https://code.responsivevoice.org/responsivevoice.js'></script> <!-- find out if google is better -->
 <script>
+
+
 $(function() {
 
-})
+	var etsy = new Etsy();
+	// etsy.getRequest('listings', 'listings/active', {'limit': 30});
+	etsy.getRequest('categories', 'taxonomy/categories', {});
+	etsy.getRequest('listings', 'listings/active', {'limit': 30, 'category': 'candles'});
+	// etsy.getRequest('sub-categories', 'taxonomy/categories/accessories', {});
 
 
+
+
+	/* 
+To Do:
+
+- Update control code to handle table manipulation as it pertains to hovering
+- Add search capability and info changing
+- Allowing users to navigate down sub-categories is fine as long as I give them a good way to go back up. I do not have a sufficient solution to reversing track, so instead I'm just not going to allow sub-categories. That means users can click on a category to go to that category's products, but the LinkList will remain unmodified other than "Popular Products" taking the first slot. Implement this.
+// NOTE: links are not real; they will just trigger an AJAX call in Etsy.js to repopulate the LinkList and Table
+
+
+
+*/
+
+
+});
 </script>
 </body>
 </html>

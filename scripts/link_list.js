@@ -68,9 +68,3 @@ LinkList.prototype.right = function() {
 		$('#link_list ul').append(this.createLi(rightCell.data('name')));
 	}
 }
-
-// TODO: figure out how to properly link to categories such that I can access their featured products or whatever. 
-// TODO: add title to each page. Maybe an h1 or something. access could be through `
-// NOTE: links are not real; they will just trigger an AJAX call in Etsy.js to repopulate the LinkList and Table
-
-
