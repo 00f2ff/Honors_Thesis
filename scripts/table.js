@@ -1,3 +1,6 @@
+// initialize helper class
+var global = new Global();
+
 function Table(unformattedProducts) {
 	var products = [];
 	for (var i = 0; i < unformattedProducts.length; i++) {
@@ -7,7 +10,6 @@ function Table(unformattedProducts) {
 		products[products.length-1].push(unformattedProducts[i]);
 	}
 	this.products = products;
-	console.log(this.products);
 }
 
 /*
@@ -23,7 +25,6 @@ Table.prototype.generateGrid = function() {
 								<div class="product-name">'+this.products[r][c].title+'</div> \
 								<div class="product-price">$'+this.products[r][c].price+'</div> \
 							</div>');
-			product.data('listing_id', this.products[r][c].listing_id);
 			row.append(product);			
 		}
 		$('#table').append(row);
@@ -42,20 +43,12 @@ Table.prototype.generateGrid = function() {
 Table.prototype.generateHoverGrid = function() {
 	for (var r = 0; r < this.products.length; r++) {
 		for (var c = 0; c < this.products[r].length; c++) {
-			var cell = $('<div class="cell"></div>');
-			cell.attr({
+			var attributes = {
 				'data-title': this.products[r][c].title,
 				'data-price': '$'+this.products[r][c].price,
 				'data-listing_id': this.products[r][c].listing_id
-			}).on('mouseover', function() {
-				$(this).css('background-color', 'yellow');
-				console.log($(this).data('title'));
-				console.log($(this).data('price'));
-				console.log($(this).data('listing_id'));
-				console.log('-----');
-			}).on('mouseout', function() {
-				$(this).css('background-color', 'blue');
-			});
+			}
+			var cell = global.createCell(attributes);
 			// make some cells transparent if the number of product rows exceeds 6
 			if (r > 5) {
 				cell.addClass('invisible');

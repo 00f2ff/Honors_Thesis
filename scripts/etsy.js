@@ -1,5 +1,8 @@
 $(function() {
 
+	// initialize helper class
+	// var global = new Global();
+
 	// NOTE: I could limit queries to 18, and when arrow key goes all the way to right, have it activate another call
 	// however, new cells would need to all be invisible, so perhaps make generateHoverGrid have an optional parameter
 	function findActiveListings() {
@@ -36,7 +39,7 @@ $(function() {
 				if (data.ok) {
 					console.log(data);
 					var linkList = new LinkList(data.results);
-					
+
 				} else {
 					console.log(data.error);
 				}
