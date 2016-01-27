@@ -10,55 +10,53 @@ function Table(unformattedProducts) {
 		products[products.length-1].push(unformattedProducts[i]);
 	}
 	this.products = products;
+	// cell queues
+	this.inactiveQueue = [ [], [], [] ];
+	this.previouslyActiveQueue = [ [], [], [] ];
+	this.generateUI();
 }
 
 /*
- * Generate visible grid
+ * Generate visible and hover grids
+ * Hover grid is rotated version of grid.
+ * Grid: [ [1,2,3], [4,5,6], [7,8,9], [10,11,12], [13,14,15] ]
+ * Hover grid: [ [1,4,7,10,13], [2,5,8,11,14], [3,6,9,12,15] ]
  */
-Table.prototype.generateGrid = function() {
+Table.prototype.generateUI = function() {
 	for (var r = 0; r < this.products.length; r++) {
 		var row = $('<div class="row"></div>');
 		for (var c = 0; c < this.products[r].length; c++) {
 			/* image is a placeholder at the moment; I'm not going to add a real image for bandwidth concerns */
+			// Create product
 			var product = $('<div class="product"> \
 								<div class="product-image"></div> \
 								<div class="product-name">'+this.products[r][c].title+'</div> \
 								<div class="product-price">$'+this.products[r][c].price+'</div> \
 							</div>');
-			row.append(product);			
-		}
-		$('#table').append(row);
-	}
-	// this.generateHoverGrid();
-}
-
-/*
- * Generate hover grid
- * I could refactor this to have generateGrid() do both actions to save some time, but the code would look gross.
- *
- * Hover grid is rotated version of grid.
- * Grid: [ [1,2,3], [4,5,6], [7,8,9], [10,11,12], [13,14,15] ]
- * Hover grid: [ [1,4,7,10,13], [2,5,8,11,14], [3,6,9,12,15] ]
- */
-Table.prototype.generateHoverGrid = function() {
-	for (var r = 0; r < this.products.length; r++) {
-		for (var c = 0; c < this.products[r].length; c++) {
+			// Create cell	
 			var attributes = {
 				'data-title': this.products[r][c].title,
 				'data-price': '$'+this.products[r][c].price,
 				'data-listing_id': this.products[r][c].listing_id
 			}
 			var cell = global.createCell(attributes);
-			// make some cells transparent if the number of product rows exceeds 6
-			if (r > 5) {
-				cell.addClass('invisible');
-			}
-			// perform rotation (add 1 to hover-row index to preserve number row)
-			$($('.hover-row')[c+1]).append(cell);
 
+			// perform rotation (add 1 to hover-row index to preserve number row)
+			// move cells into inactiveQueue if number of product rows exceeds 6
+			if (r > 5) {
+				this.inactiveQueue[c].push(cell);
+			} else {
+				// match number of visible products with number of visible cells.
+				// this is a semi-arbitrary decision that mainly helps with debugging.
+				// while real UIs will incorporate lazy-loading, they don't remove previous content from the screen
+				row.append(product);
+				$($('.hover-row')[c+1]).append(cell);
+			}	
 		}
+		$('#table').append(row);
 	}
 }
+
 
 
 
