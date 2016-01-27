@@ -28,13 +28,17 @@ LinkList.prototype.createCell = function(name, category_id) {
 	return cell;
 }
 
+// This exists because the path to name is pretty huge and the code looks bad when it's all in one place
+LinkList.prototype.createLi = function(name) {
+	return $('<li>'+name+'</li>');
+}
+
 LinkList.prototype.generateUI = function() {
 	// Loop through activeQueue, appending cells to hover-row and cell name to <ul> (within <li>)
 	for (var i = 0; i < this.activeQueue.length; i++) {
-		// add cell to first hover-row (reserved for numbers);
-		$($('.hover-row')[0]).append(this.activeQueue[i]);
+		$('.hover-row').first().append(this.activeQueue[i]);
 		// add name to <ul>
-		$('#link_list ul').append($('<li>'+this.activeQueue[i].data('name')+'</li>'));
+		$('#link_list ul').append(this.createLi(this.activeQueue[i].data('name')));
 	}
 }
 
@@ -43,15 +47,34 @@ LinkList.prototype.generateUI = function() {
  * React might work well here but I'm not going to use it for simplicity's sake
  */
 LinkList.prototype.left = function() {
-	// remove cell and li
-	$($('.hover-row')[0]).children("a:first").remove();
-	$('#link_list ul').children("a:first").remove();
-	// move cells between queues (right now this just keeps data accurate; I don't need a full refresh option)
-	this.previouslyActiveQueue.push(this.activeQueue.shift());
-	this.activeQueue.push(this.inactiveQueue.shift());
-	// add cell and li to end of hover-row and <ul>
-	$($('.hover-row')[0]).append(this.activeQueue[this.activeQueue.length-1]);
-	$('#link_list ul').append($('<li>'+this.activeQueue[this.activeQueue.length-1].data('name')+'</li>'));
+	// check if there are more inactive cells
+	if (this.inactiveQueue.length > 0) {
+		// remove first cell and li
+		$('.hover-row').first().children(":first").remove();
+		$('#link_list ul').children(":first").remove();
+		// move cells between queues (right now this just keeps data accurate; I don't need a full refresh option)
+		this.previouslyActiveQueue.push(this.activeQueue.shift());
+		this.activeQueue.push(this.inactiveQueue.shift());
+		// add cell and li to end of hover-row and <ul>
+		$('.hover-row').first().append(this.activeQueue[this.activeQueue.length-1]);
+		$('#link_list ul').append(this.createLi(this.activeQueue[this.activeQueue.length-1].data('name')));
+	}
+}
+
+// NOTE: there's probably some nifty way to do abstract left and right, but I'm not quite sure how to do that
+LinkList.prototype.right = function() {
+	// check if there are more previously active cells
+	if (this.previouslyActiveQueue.length > 0) {
+		// remove last cell and li
+		$('.hover-row').first().children(":last").remove();
+		$('#link_list ul li:last-child').remove();
+		// move cells between queues
+		this.activeQueue.unshift(this.previouslyActiveQueue.pop());
+		this.inactiveQueue.unshift(this.activeQueue.pop());
+		// add cell and li to beginning of hover-row and <ul>
+		$('.hover-row').first().prepend(this.activeQueue[0]);
+		$('#link_list ul').append(this.createLi(this.activeQueue[0].data('name')));
+	}
 }
 
 // TODO: figure out how to properly link to categories such that I can access their featured products or whatever. 
