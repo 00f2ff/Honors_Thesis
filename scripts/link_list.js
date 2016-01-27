@@ -32,6 +32,22 @@ LinkList.prototype.generateUI = function(activeCells) {
 	}
 }
 
+// NOTE: there's probably some nifty way to do abstract left and right, but I'm not quite sure how to do that
+LinkList.prototype.left = function() {
+	// check if there are more previously active cells
+	if (this.previouslyActiveQueue.length > 0) {
+		// pop cell and li from DOM
+		var rightCell = $('.hover-row').first().children(":last").remove();
+		$('#link_list ul li:last-child').remove();
+		// move cells between queues
+		this.inactiveQueue.unshift(rightCell);
+		var leftCell = this.previouslyActiveQueue.pop();
+		// add cell and li to beginning of hover-row and <ul>
+		$('.hover-row').first().prepend(leftCell);
+		$('#link_list ul').append(this.createLi(leftCell.data('name')));
+	}
+}
+
 /*
  * Pops first <li> and cell elements and pushes new ones
  * React might work well here but I'm not going to use it for simplicity's sake
@@ -41,30 +57,14 @@ LinkList.prototype.right = function() {
 	// check if there are more inactive cells
 	if (this.inactiveQueue.length > 0) {
 		// unshift cell and li from DOM
-		var firstCell = $('.hover-row').first().children(":first").remove();
+		var leftCell = $('.hover-row').first().children(":first").remove();
 		$('#link_list ul:first-child').remove();
 		// move cells between queues
-		this.previouslyActiveQueue.push(firstCell);
-		var newCell = this.inactiveQueue.shift()
+		this.previouslyActiveQueue.push(leftCell);
+		var rightCell = this.inactiveQueue.shift()
 		// add cell and li to end of hover-row and <ul>
-		$('.hover-row').first().append(newCell);
-		$('#link_list ul').append(this.createLi(newCell.data('name')));
-	}
-}
-
-// NOTE: there's probably some nifty way to do abstract left and right, but I'm not quite sure how to do that
-LinkList.prototype.left = function() {
-	// check if there are more previously active cells
-	if (this.previouslyActiveQueue.length > 0) {
-		// pop cell and li from DOM
-		var lastCell = $('.hover-row').first().children(":last").remove();
-		$('#link_list ul li:last-child').remove();
-		// move cells between queues
-		this.inactiveQueue.unshift(lastCell);
-		var newCell = this.previouslyActiveQueue.pop();
-		// add cell and li to beginning of hover-row and <ul>
-		$('.hover-row').first().prepend(newCell);
-		$('#link_list ul').append(this.createLi(newCell.data('name')));
+		$('.hover-row').first().append(rightCell);
+		$('#link_list ul').append(this.createLi(rightCell.data('name')));
 	}
 }
 
