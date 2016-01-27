@@ -24,6 +24,8 @@ LinkList.prototype.createLi = function(name) {
 }
 
 LinkList.prototype.generateUI = function(activeCells) {
+	$('#link_list ul').empty();
+	$('.hover-row').first().empty();
 	// Loop through activeQueue, appending cells to hover-row and cell name to <ul> (within <li>)
 	for (var i = 0; i < activeCells.length; i++) {
 		$('.hover-row').first().append(activeCells[i]);
@@ -32,7 +34,6 @@ LinkList.prototype.generateUI = function(activeCells) {
 	}
 }
 
-// NOTE: there's probably some nifty way to do abstract left and right, but I'm not quite sure how to do that
 LinkList.prototype.left = function() {
 	// check if there are more previously active cells
 	if (this.previouslyActiveQueue.length > 0) {

@@ -31,6 +31,8 @@ Table.prototype.createProduct = function(title, price) {
  * Hover grid: [ [1,4,7,10,13], [2,5,8,11,14], [3,6,9,12,15] ]
  */
 Table.prototype.generateUI = function() {
+	$('#table').empty();
+	$('.hover-row:not(:first-child)').empty();
 	for (var r = 0; r < this.products.length; r++) {
 		var row = $('<div class="row"></div>');
 		for (var c = 0; c < this.products[r].length; c++) {
