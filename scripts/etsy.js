@@ -36,9 +36,7 @@ $(function() {
 				if (data.ok) {
 					console.log(data);
 					var linkList = new LinkList(data.results);
-					// linkList.generateList();
-					// linkList.generateHoverList();
-					linkList.generateUI();
+					
 				} else {
 					console.log(data.error);
 				}
