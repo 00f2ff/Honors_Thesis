@@ -45,7 +45,7 @@ Table.prototype.generateUI = function() {
 				'data-price': '$'+this.products[r][c].price,
 				'data-listing_id': this.products[r][c].listing_id
 			}
-			var cell = global.createCell(attributes);
+			var cell = global.cell(attributes);
 
 			// perform rotation (add 1 to hover-row index to preserve number row)
 			// move cells into inactiveQueue if number of product rows exceeds 6

@@ -8,7 +8,7 @@ function LinkList(categories) {
 			'data-name': categories[i].long_name,
 			'data-category_id': categories[i].category_id
 		}
-		cell = global.createCell(attributes);
+		var cell = global.cell(attributes);
 		categories[i] = cell;
 	}
 	// Distribute cells between activeQueue and inactiveQueue
@@ -67,4 +67,20 @@ LinkList.prototype.right = function() {
 		$('.hover-row').first().append(rightCell);
 		$('#link_list ul').append(this.createLi(rightCell.data('name')));
 	}
+}
+
+/*
+ * Adds a 'Popular Products' cell and line in first category index
+ */
+LinkList.prototype.addPopularProducts = function() {
+	// move last child into inactive
+	var lastCell = $('.hover-row').first().children(':last').remove();
+	this.inactiveQueue.unshift(lastCell);
+	var attributes = {
+			'data-name': '/'
+		}
+	var firstcell = global.cell(attributes);
+	// insert cell as first child
+	$('.hover-row').first().prepend(firstCell);
+	$('#link_list ul').prepend(this.createLi('Popular Products'));
 }

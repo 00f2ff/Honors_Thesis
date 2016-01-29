@@ -18,7 +18,7 @@
 		<div class="hover-row"></div>
 	</div>
 	<div id="search">
-		<div id="title">Popular Products</div> <!-- this is the name of each page, not the application -->
+		<div id="title">Shopping</div>
 		<div id="search-bar">
 			<form>
 				<input type="text" />
@@ -53,13 +53,28 @@
 $(function() {
 
 	var etsy = new Etsy();
-	// etsy.getRequest('listings', 'listings/active', {'limit': 30});
+	etsy.getRequest('listings', 'listings/trending', {'limit': 30});
 	etsy.getRequest('categories', 'taxonomy/categories', {});
 	// etsy.getRequest('listings', 'listings/active', {'limit': 30, 'category': 'candles'});
-	etsy.getRequest('listings', 'listings/active', {'limit': 30, 'keywords': 'birthday%20cards'}); // search will just replace spaces %20 and remove all other non-alphabetical characters
+	// etsy.getRequest('listings', 'listings/active', {'limit': 30, 'keywords': 'birthday%20cards'}); // search will just replace spaces %20 and remove all other non-alphabetical characters
 	// etsy.getRequest('sub-categories', 'taxonomy/categories/accessories', {});
 
 
+	// I'm running into a circular logic issue about where I can place this handler, as it's on picking up here...
+	// Assigns click handler to cells (effect differs based on cell type)
+	$('.cell').on('click', function() {
+		// LinkList
+		console.log('hi')
+		if ($(this).attr('data-name')) {
+			if ($(this).data('name') === '/') {
+				// call the 'Popular Products' removal function in LinkedList
+				LinkedList.addPopularProducts();
+				etsy.getRequest('listings', 'listings/trending', {'limit': 30});
+			}
+			// call the 'Popular Products' addition function in LinkedList
+			// call a etsy request on products for this category
+		}
+	});
 
 
 /* 
@@ -67,6 +82,7 @@ To Do:
 
 - Write Table and LinkList interaction code based on research.js (this includes hovering and touch activation)
 - Check whether pressing certain Fingers keys changes how the software operates while people interact with my application. If it does, read Fingers code and change those key bindings in a separate branch
+- Design and develop product page
 - Add search capability
 - Implement point below.
 	- Allowing users to navigate down sub-categories is fine as long as I give them a good way to go back up. I do not have a sufficient solution to reversing track, so instead I'm just not going to allow sub-categories. That means users can click on a category to go to that category's products, but the LinkList will remain unmodified other than "Popular Products" taking the first slot. 

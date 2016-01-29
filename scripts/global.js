@@ -2,7 +2,7 @@ function Global() {
 
 }
 
-Global.prototype.createCell = function(attributes) {
+Global.prototype.cell = function(attributes) {
 	var cell = $('<div class="cell"></div>');
 	// assumes attributes come in prefixed with 'data-'
 	cell.attr(attributes)
