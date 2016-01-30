@@ -59,14 +59,25 @@
 	// etsy.getRequest('listings', 'listings/active', {'limit': 30, 'keywords': 'birthday%20cards'}); // search will just replace spaces %20 and remove all other non-alphabetical characters
 	// etsy.getRequest('sub-categories', 'taxonomy/categories/accessories', {});
 
+	// Keycode arrays. Index of key corresponds with index of cell in hover-row
+	var linkListKeyCodes = [49,50,51,52,53,54];
+	var tableFirstColumnKeyCodes = [81,87,69,82,84,89];
+	var tableSecondColumnKeyCodes = [65,83,68,70,71,72];
+	var tableThirdColumnKeyCodes = [90,88,67,86,66,78];
 
-	// ************ THESE NEED TO TRACK KEYBOARD PRESSES NOT CLICK
-	// either way, I need to get it working first...
+	// Note: I don't think I need to preventDefault on keypresses since I'm not using special keys
+
+	
 	// Assigns click handler to cells (effect differs based on cell type)
-	$('body').on('click', '.cell', function() {
-		// LinkList (linkList and table initialized in etsy.js)
-		if ($(this).attr('data-name')) {
-			if ($(this).data('name') === '/') {
+	// $('body').on('click', '.cell', function(e) {
+	$('body').keydown(function(e) {
+		// find which hover-row had a cell pressed
+		var kc = e.keyCode;
+		var cell;
+		if (linkListKeyCodes.indexOf(kc) > -1) {
+			cell = $('.hover-row:first-child .cell:nth-child('+(1+linkListKeyCodes.indexOf(kc))+')');
+			console.log(cell);
+			if (cell.data('name') === '/') {
 				// call the 'Popular Products' removal function in LinkedList
 				linkList.removePopularProducts();
 				etsy.getRequest('listings', 'listings/trending', {'limit': 30});
