@@ -50,7 +50,7 @@
 <script>
 
 
-$(function() {
+
 
 	var etsy = new Etsy();
 	etsy.getRequest('listings', 'listings/trending', {'limit': 30});
@@ -60,19 +60,23 @@ $(function() {
 	// etsy.getRequest('sub-categories', 'taxonomy/categories/accessories', {});
 
 
-	// I'm running into a circular logic issue about where I can place this handler, as it's on picking up here...
+	// ************ THESE NEED TO TRACK KEYBOARD PRESSES NOT CLICK
+	// either way, I need to get it working first...
 	// Assigns click handler to cells (effect differs based on cell type)
-	$('.cell').on('click', function() {
-		// LinkList
-		console.log('hi')
+	$('body').on('click', '.cell', function() {
+		// LinkList (linkList and table initialized in etsy.js)
 		if ($(this).attr('data-name')) {
 			if ($(this).data('name') === '/') {
 				// call the 'Popular Products' removal function in LinkedList
-				LinkedList.addPopularProducts();
+				linkList.removePopularProducts();
 				etsy.getRequest('listings', 'listings/trending', {'limit': 30});
+			} else {
+				// check if popular products is already shown
+				if ($('.hover-row').first().children(':first').data('name') !== '/') {
+					linkList.addPopularProducts();
+				}
+				etsy.getRequest('listings', 'listings/active', {'limit': 30, 'category': $(this).data('name')});
 			}
-			// call the 'Popular Products' addition function in LinkedList
-			// call a etsy request on products for this category
 		}
 	});
 
@@ -91,7 +95,7 @@ To Do:
 */
 
 
-});
+
 </script>
 </body>
 </html>

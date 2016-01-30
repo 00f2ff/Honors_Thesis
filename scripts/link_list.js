@@ -1,12 +1,15 @@
 // initialize helper class
 var global = new Global();
 
-function LinkList(categories) {
+function LinkList() {
+	
+}
+
+LinkList.prototype.populate = function(categories) {
 	// Convert all categories into cells
 	for (var i = 0; i < categories.length; i++) {
 		var attributes = {
-			'data-name': categories[i].long_name,
-			'data-category_id': categories[i].category_id
+			'data-name': categories[i].long_name
 		}
 		var cell = global.cell(attributes);
 		categories[i] = cell;
@@ -59,7 +62,7 @@ LinkList.prototype.right = function() {
 	if (this.inactiveQueue.length > 0) {
 		// unshift cell and li from DOM
 		var leftCell = $('.hover-row').first().children(":first").remove();
-		$('#link_list ul:first-child').remove();
+		$('#link_list ul li:first-child').remove();
 		// move cells between queues
 		this.previouslyActiveQueue.push(leftCell);
 		var rightCell = this.inactiveQueue.shift()
@@ -75,12 +78,27 @@ LinkList.prototype.right = function() {
 LinkList.prototype.addPopularProducts = function() {
 	// move last child into inactive
 	var lastCell = $('.hover-row').first().children(':last').remove();
+	$('#link_list ul li:last-child').remove();
 	this.inactiveQueue.unshift(lastCell);
 	var attributes = {
 			'data-name': '/'
 		}
-	var firstcell = global.cell(attributes);
+	var firstCell = global.cell(attributes);
 	// insert cell as first child
 	$('.hover-row').first().prepend(firstCell);
 	$('#link_list ul').prepend(this.createLi('Popular Products'));
+}
+
+/*
+ * Removes the 'Popular Products' cell and line
+ */
+LinkList.prototype.removePopularProducts = function() {
+	// remove first cell and line
+	$('.hover-row').first().children(':first').remove();
+	$('#link_list ul li:first-child').remove();
+	// effectively perform a 'left' command without changing the previously active queue
+	var rightCell = this.inactiveQueue.shift()
+	// add cell and li to end of hover-row and <ul>
+	$('.hover-row').first().append(rightCell);
+	$('#link_list ul').append(this.createLi(rightCell.data('name')));
 }

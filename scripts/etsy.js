@@ -1,3 +1,6 @@
+var linkList = new LinkList();
+var table = new Table();
+
 function Etsy() {
 	this.queryBase = 'https://openapi.etsy.com/v2/';
 }
@@ -19,9 +22,9 @@ Etsy.prototype.getRequest = function(purpose, uri, parameters) {
 			if (data.ok) {
 				console.log(data.results);
 				if (purpose === 'listings') {
-					var table = new Table(data.results);
+					table.populate(data.results);
 				} else if (purpose === 'categories') {
-					var linkList = new LinkList(data.results);
+					linkList.populate(data.results);
 				} 
 				
 			} else {
@@ -33,3 +36,5 @@ Etsy.prototype.getRequest = function(purpose, uri, parameters) {
 		}
 	});
 }
+
+

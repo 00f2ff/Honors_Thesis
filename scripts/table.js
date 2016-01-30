@@ -1,7 +1,11 @@
 // initialize helper class
 var global = new Global();
 
-function Table(unformattedProducts) {
+function Table() {
+	
+}
+
+Table.prototype.populate = function(unformattedProducts) {
 	var products = [];
 	for (var i = 0; i < unformattedProducts.length; i++) {
 		if (i % 3 === 0) {
