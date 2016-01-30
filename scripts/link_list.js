@@ -41,7 +41,7 @@ LinkList.prototype.left = function() {
 	// check if there are more previously active cells
 	if (this.previouslyActiveQueue.length > 0) {
 		// pop cell and li from DOM
-		var rightCell = $('.hover-row').first().children(":last").remove();
+		var rightCell = $('.hover-row').first().children(":last").detach();
 		$('#link_list ul li:last-child').remove();
 		// move cells between queues
 		this.inactiveQueue.unshift(rightCell);
@@ -61,7 +61,7 @@ LinkList.prototype.right = function() {
 	// check if there are more inactive cells
 	if (this.inactiveQueue.length > 0) {
 		// unshift cell and li from DOM
-		var leftCell = $('.hover-row').first().children(":first").remove();
+		var leftCell = $('.hover-row').first().children(":first").detach();
 		$('#link_list ul li:first-child').remove();
 		// move cells between queues
 		this.previouslyActiveQueue.push(leftCell);
@@ -77,7 +77,7 @@ LinkList.prototype.right = function() {
  */
 LinkList.prototype.addPopularProducts = function() {
 	// move last child into inactive
-	var lastCell = $('.hover-row').first().children(':last').remove();
+	var lastCell = $('.hover-row').first().children(':last').detach();
 	$('#link_list ul li:last-child').remove();
 	this.inactiveQueue.unshift(lastCell);
 	var attributes = {
@@ -94,10 +94,11 @@ LinkList.prototype.addPopularProducts = function() {
  */
 LinkList.prototype.removePopularProducts = function() {
 	// remove first cell and line
-	$('.hover-row').first().children(':first').remove();
+	$('.hover-row').first().children(':first').detach();
 	$('#link_list ul li:first-child').remove();
 	// effectively perform a 'left' command without changing the previously active queue
-	var rightCell = this.inactiveQueue.shift()
+	var rightCell = this.inactiveQueue.shift();
+	console.log(rightCell);
 	// add cell and li to end of hover-row and <ul>
 	$('.hover-row').first().append(rightCell);
 	$('#link_list ul').append(this.createLi(rightCell.data('name')));

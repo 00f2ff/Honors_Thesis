@@ -72,7 +72,7 @@ Table.prototype.right = function() {
 	// check if there are more inactive cells
 	if (this.inactiveQueue.length > 0) {
 		// pop cell from each hover-row and product row from DOM
-		var leftCells = $('.hover-row:not(:first-child) .cell:first-child').remove();
+		var leftCells = $('.hover-row:not(:first-child) .cell:first-child').detach();
 		$('#table .row:first-child').remove();
 		var row = $('<div class="row"></div>');
 		for (var i = 0; i < 3; i++) {
@@ -92,7 +92,7 @@ Table.prototype.left = function() {
 	// check if there are more previously active cells
 	if (this.previouslyActiveQueue.length > 0) {
 		// pop cell from each hover-row and product row from DOM
-		var rightCells = $('.hover-row:not(:first-child) .cell:last-child').remove();
+		var rightCells = $('.hover-row:not(:first-child) .cell:last-child').detach();
 		$('#table .row:last-child').remove();
 		var row = $('<div class="row"></div>');
 		for (var i = 0; i < 3; i++) {
