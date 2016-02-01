@@ -24,7 +24,7 @@ Table.prototype.createProduct = function(title, price) {
 	return $('<div class="product"> \
 				<div class="product-image"></div> \
 				<div class="product-name">'+title+'</div> \
-				<div class="product-price">$'+price+'</div> \
+				<div class="product-price">'+price+'</div> \
 			</div>');
 }
 
@@ -40,9 +40,6 @@ Table.prototype.generateUI = function() {
 	for (var r = 0; r < this.products.length; r++) {
 		var row = $('<div class="row"></div>');
 		for (var c = 0; c < this.products[r].length; c++) {
-			/* image is a placeholder at the moment; I'm not going to add a real image for bandwidth concerns */
-			// Create product
-			var product = this.createProduct(this.products[r][c].title, this.products[r][c].price);
 			// Create cell	
 			var attributes = {
 				'data-title': this.products[r][c].title,
@@ -50,6 +47,9 @@ Table.prototype.generateUI = function() {
 				'data-listing_id': this.products[r][c].listing_id
 			}
 			var cell = global.cell(attributes);
+			/* image is a placeholder at the moment; I'm not going to add a real image for bandwidth concerns */
+			// Create product
+			var product = this.createProduct(cell.data('title'), cell.data('price'));
 
 			// perform rotation (add 1 to hover-row index to preserve number row)
 			// move cells into inactiveQueue if number of product rows exceeds 6
@@ -64,7 +64,10 @@ Table.prototype.generateUI = function() {
 				$('.hover-row:nth-child('+(2+c)+')').append(cell); // 2+c because :nth-child(1) refers to first child
 			}	
 		}
-		$('#table').append(row);
+		// check whether row had cells appended or if cells moved into inactiveQueue
+		if (row.children().length > 0) {
+			$('#table').append(row);
+		}
 	}
 }
 
@@ -84,6 +87,7 @@ Table.prototype.right = function() {
 			row.append(this.createProduct(rightCell.data('title'), rightCell.data('price')));
 		}
 		// add row to dom
+		console.log(row);
 		$('#table').append(row);
 	}
 }
