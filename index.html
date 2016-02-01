@@ -73,23 +73,42 @@
 	$('body').keydown(function(e) {
 		// find which hover-row had a cell pressed
 		var kc = e.keyCode;
-		var cell;
+		console.log(kc);		
 		if (linkListKeyCodes.indexOf(kc) > -1) {
-			cell = $('.hover-row:first-child .cell:nth-child('+(1+linkListKeyCodes.indexOf(kc))+')');
-			console.log(cell);
-			if (cell.data('name') === '/') {
-				// call the 'Popular Products' removal function in LinkedList
-				linkList.removePopularProducts();
-				etsy.getRequest('listings', 'listings/trending', {'limit': 30});
-			} else {
-				// check if popular products is already shown
-				if ($('.hover-row').first().children(':first').data('name') !== '/') {
-					linkList.addPopularProducts();
-				}
-				etsy.getRequest('listings', 'listings/active', {'limit': 30, 'category': $(this).data('name')});
+			activateCategoryCell(kc);
+		}
+		// implement for table once I get product pages figured out
+		else if (kc === 37) { // left arrow
+			// Find which row is currently hovered over
+			// participants will need instruction on how hovering + arrow keys work
+			if ($('.hover-row:first-of-type:hover').length > 0) {
+				linkList.left();
+			}
+		} else if (kc === 39) { // right arrow
+			if ($('.hover-row:first-of-type:hover').length > 0) {
+				linkList.right();
 			}
 		}
 	});
+
+	/*
+	 * Moving logic to external function to make keydown handler less awful
+	 */
+	function activateCategoryCell(kc) {
+		var cell = $('.hover-row:first-child .cell:nth-child('+(1+linkListKeyCodes.indexOf(kc))+')');
+		console.log(cell);
+		if (cell.data('name') === '/') {
+			// call the 'Popular Products' removal function in LinkedList
+			linkList.removePopularProducts();
+			etsy.getRequest('listings', 'listings/trending', {'limit': 30});
+		} else {
+			// check if popular products is already shown
+			if ($('.hover-row').first().children(':first').data('name') !== '/') {
+				linkList.addPopularProducts();
+			}
+			etsy.getRequest('listings', 'listings/active', {'limit': 30, 'category': $(this).data('name')});
+		}
+	}
 
 
 /* 
@@ -99,9 +118,6 @@ To Do:
 - Check whether pressing certain Fingers keys changes how the software operates while people interact with my application. If it does, read Fingers code and change those key bindings in a separate branch
 - Design and develop product page
 - Add search capability
-- Implement point below.
-	- Allowing users to navigate down sub-categories is fine as long as I give them a good way to go back up. I do not have a sufficient solution to reversing track, so instead I'm just not going to allow sub-categories. That means users can click on a category to go to that category's products, but the LinkList will remain unmodified other than "Popular Products" taking the first slot. 
-// NOTE: links are not real; they will just trigger an AJAX call in Etsy.js to repopulate the LinkList and Table
 
 */
 
