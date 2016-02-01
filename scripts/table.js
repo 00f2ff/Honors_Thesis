@@ -70,7 +70,7 @@ Table.prototype.generateUI = function() {
 
 Table.prototype.right = function() {
 	// check if there are more inactive cells
-	if (this.inactiveQueue.length > 0) {
+	if (this.inactiveQueue[0].length > 0) {
 		// pop cell from each hover-row and product row from DOM
 		var leftCells = $('.hover-row:not(:first-child) .cell:first-child').detach();
 		$('#table .row:first-child').remove();
@@ -78,7 +78,7 @@ Table.prototype.right = function() {
 		for (var i = 0; i < 3; i++) {
 			// move cells between queues
 			this.previouslyActiveQueue[i].push(leftCells[i]);
-			var rightCell = this.inactiveQueue[i].shift();
+			var rightCell = $(this.inactiveQueue[i].shift());
 			// add cell to end of hover-row and product to row
 			$('.hover-row:nth-child('+(2+i)+')').append(rightCell);
 			row.append(this.createProduct(rightCell.data('title'), rightCell.data('price')));
@@ -90,7 +90,7 @@ Table.prototype.right = function() {
 
 Table.prototype.left = function() {
 	// check if there are more previously active cells
-	if (this.previouslyActiveQueue.length > 0) {
+	if (this.previouslyActiveQueue[0].length > 0) {
 		// pop cell from each hover-row and product row from DOM
 		var rightCells = $('.hover-row:not(:first-child) .cell:last-child').detach();
 		$('#table .row:last-child').remove();
@@ -98,13 +98,15 @@ Table.prototype.left = function() {
 		for (var i = 0; i < 3; i++) {
 			// move cells between queues
 			this.inactiveQueue[i].unshift(rightCells[i]); // unshift inserts element in first index
-			var leftCell = this.previouslyActiveQueue[i].pop();
+			var leftCell = $(this.previouslyActiveQueue[i].pop());
 			// add cell to beginning of hover-row and product to row
 			$('.hover-row:nth-child('+(2+i)+')').prepend(leftCell);
-			row.prepend(this.createProduct(leftCell.data('title'), leftCell.data('price')));
+			row.append(this.createProduct(leftCell.data('title'), leftCell.data('price')));
 		}
 		// add row to dom
 		$('#table').prepend(row);
 	}
 }
 
+
+// Problems: columns 1 and 3 are switching, and $ signs appear to get added randomly. Might be asynchrony issue

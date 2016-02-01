@@ -83,10 +83,14 @@
 			// participants will need instruction on how hovering + arrow keys work
 			if ($('.hover-row:first-of-type:hover').length > 0) {
 				linkList.left();
+			} else if ($('.hover-row:not(:first-child):hover').length > 0) { // table
+				table.left();
 			}
 		} else if (kc === 39) { // right arrow
 			if ($('.hover-row:first-of-type:hover').length > 0) {
 				linkList.right();
+			} else if ($('.hover-row:not(:first-child):hover').length > 0) {
+				table.right();
 			}
 		}
 	});
