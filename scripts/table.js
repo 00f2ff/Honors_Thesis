@@ -101,7 +101,7 @@ Table.prototype.left = function() {
 			var leftCell = this.previouslyActiveQueue[i].pop();
 			// add cell to beginning of hover-row and product to row
 			$('.hover-row:nth-child('+(2+i)+')').prepend(leftCell);
-			row.append(this.createProduct(leftCell.data('title'), leftCell.data('price')));
+			row.prepend(this.createProduct(leftCell.data('title'), leftCell.data('price')));
 		}
 		// add row to dom
 		$('#table').prepend(row);

@@ -48,7 +48,7 @@ LinkList.prototype.left = function() {
 		var leftCell = this.previouslyActiveQueue.pop();
 		// add cell and li to beginning of hover-row and <ul>
 		$('.hover-row:first-of-type').prepend(leftCell);
-		$('#link_list ul').append(this.createLi(leftCell.data('name')));
+		$('#link_list ul').prepend(this.createLi(leftCell.data('name')));
 	}
 }
 
