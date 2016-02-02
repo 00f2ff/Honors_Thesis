@@ -43,6 +43,7 @@
 <script src="scripts/jquery-1.11.3.min.js"></script>
 <script src="scripts/global.js"></script>
 <script src="scripts/table.js"></script>
+<script src="scripts/product_table.js"></script>
 <script src="scripts/link_list.js"></script>
 <script src="scripts/api_key.js"></script>
 <script src="scripts/etsy.js"></script>
@@ -70,27 +71,51 @@
 	$('body').keydown(function(e) {
 		// find which hover-row had a cell pressed
 		var kc = e.keyCode;
+		// find out whether UI is showing Table or ProductTable (because no arrow control / activation on latter)
+		// AND is located on select conditionals (does not apply to LinkList)
+		var isTable = $('.hover-row:nth-child(3)').children().length;
+		console.log(isTable);
 		console.log(kc);		
 		if (linkListKeyCodes.indexOf(kc) > -1) {
 			activateCategoryCell(kc);
-		}
-		// implement for table once I get product pages figured out
-		else if (kc === 37) { // left arrow
+		} else if (tableFirstColumnKeyCodes.indexOf(kc) > -1 && isTable) {
+			activateTableCell(kc, 2);
+		} else if (tableSecondColumnKeyCodes.indexOf(kc) > -1 && isTable) {
+			activateTableCell(kc, 3);
+		} else if (tableThirdColumnKeyCodes.indexOf(kc) > -1 && isTable) {
+			activateTableCell(kc, 4);
+		} else if (kc === 37) { // left arrow
 			// Find which row is currently hovered over
 			// participants will need instruction on how hovering + arrow keys work
-			if ($('.hover-row:first-of-type:hover').length > 0) {
+			if ($('.hover-row:first-child:hover').length > 0) {
 				linkList.left();
-			} else if ($('.hover-row:not(:first-child):hover').length > 0) { // table
+			} else if ($('.hover-row:not(:first-child):hover').length > 0 && isTable) { // table
 				table.left();
 			}
 		} else if (kc === 39) { // right arrow
-			if ($('.hover-row:first-of-type:hover').length > 0) {
+			if ($('.hover-row:first-child:hover').length > 0) {
 				linkList.right();
-			} else if ($('.hover-row:not(:first-child):hover').length > 0) {
+			} else if ($('.hover-row:not(:first-child):hover').length > 0 && isTable) {
 				table.right();
 			}
 		}
+		// cancel speech because cell won't contain same content
+		speechSynthesis.cancel();
 	});
+
+	function activateTableCell(kc, nthChild) {
+		var ckc;
+		if (nthChild === 2) {
+			ckc = tableFirstColumnKeyCodes;
+		} else if (nthChild === 3) {
+			ckc = tableSecondColumnKeyCodes;
+		} else if (nthChild === 4) {
+			ckc = tableThirdColumnKeyCodes;
+		}
+		var cell = $('.hover-row:nth-child('+nthChild+') .cell:nth-child('+(1+ckc.indexOf(kc))+')');
+		console.log(cell);
+		etsy.getRequest('product', 'listings/'+cell.data('listing_id'), {});
+	}
 
 	/*
 	 * Moving logic to external function to make keydown handler less awful
@@ -115,10 +140,10 @@
 /* 
 To Do:
 
-- Write Table and LinkList interaction code based on research.js (this includes hovering and touch activation)
 - Check whether pressing certain Fingers keys changes how the software operates while people interact with my application. If it does, read Fingers code and change those key bindings in a separate branch
 - Design and develop product page
-- Add search capability
+	- Make it look realistic-ish, but accessible the same way table is
+- Add search capability + message about turning off Fingers
 
 */
 

@@ -41,13 +41,13 @@ LinkList.prototype.left = function() {
 	// check if there are more previously active cells
 	if (this.previouslyActiveQueue.length > 0) {
 		// pop cell and li from DOM
-		var rightCell = $('.hover-row:first-of-type .cell:last-child').detach();
+		var rightCell = $('.hover-row:first-child .cell:last-child').detach();
 		$('#link_list ul li:last-child').remove();
 		// move cells between queues
 		this.inactiveQueue.unshift(rightCell);
 		var leftCell = this.previouslyActiveQueue.pop();
 		// add cell and li to beginning of hover-row and <ul>
-		$('.hover-row:first-of-type').prepend(leftCell);
+		$('.hover-row:first-child').prepend(leftCell);
 		$('#link_list ul').prepend(this.createLi(leftCell.data('name')));
 	}
 }
@@ -61,13 +61,13 @@ LinkList.prototype.right = function() {
 	// check if there are more inactive cells
 	if (this.inactiveQueue.length > 0) {
 		// unshift cell and li from DOM
-		var leftCell = $('.hover-row:first-of-type .cell:first-child').detach();
+		var leftCell = $('.hover-row:first-child .cell:first-child').detach();
 		$('#link_list ul li:first-child').remove();
 		// move cells between queues
 		this.previouslyActiveQueue.push(leftCell);
 		var rightCell = this.inactiveQueue.shift()
 		// add cell and li to end of hover-row and <ul>
-		$('.hover-row:first-of-type').append(rightCell);
+		$('.hover-row:first-child').append(rightCell);
 		$('#link_list ul').append(this.createLi(rightCell.data('name')));
 	}
 }

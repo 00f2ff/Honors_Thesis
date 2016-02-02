@@ -11,6 +11,10 @@ function Global() {
 	this.msg = msg
 }
 
+// NOTE: checking will need to change based on product table
+// as each cell will have a different data-attribute.
+// potential solutions include adding another product-specific
+// data-attribute or class to pt cells
 Global.prototype.cell = function(attributes) {
 	var cell = $('<div class="cell"></div>');
 	// assumes attributes come in prefixed with 'data-'
@@ -21,9 +25,15 @@ Global.prototype.cell = function(attributes) {
 			// Read out information depending on type of cell
 			console.log(that);
 			if ($(this).attr('data-name')) { // LinkList
-				that.msg.text = $(this).data('name');
-			} else { // Table
+				if ($(this).data('name') === '/') {
+					that.msg.text = 'Popular Products';
+				} else {
+					that.msg.text = $(this).data('name');
+				}
+			} else if ($(this).data('title')) { // Table
 				that.msg.text = $(this).data('title') + '  ' + $(this).data('price');
+			} else if ($(this).data('text')) {
+				that.msg.text = $(this).data('text');
 			}
 			speechSynthesis.speak(that.msg);
 		}).on('mouseout', function() {

@@ -1,5 +1,6 @@
 var linkList = new LinkList();
 var table = new Table();
+var productTable = new ProductTable();
 
 function Etsy() {
 	this.queryBase = 'https://openapi.etsy.com/v2/';
@@ -20,12 +21,19 @@ Etsy.prototype.getRequest = function(purpose, uri, parameters) {
 		dataType: 'jsonp',
 		success: function(data) {
 			if (data.ok) {
-				console.log(data.results);
-				if (purpose === 'listings') {
-					table.populate(data.results);
-				} else if (purpose === 'categories') {
-					linkList.populate(data.results);
-				} 
+				switch (purpose) {
+					case 'listings':
+						table.populate(data.results);
+						break;
+					case 'categories':
+						linkList.populate(data.results);
+						break;
+					case 'product':
+						productTable.populate(data.results[0]); // comes in array
+						break;
+					default:
+						console.log('Not a valid purpose');
+				}
 				
 			} else {
 				console.log(data.error);
