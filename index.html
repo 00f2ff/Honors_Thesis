@@ -141,10 +141,14 @@
 To Do:
 
 - Check whether pressing certain Fingers keys changes how the software operates while people interact with my application. If it does, read Fingers code and change those key bindings in a separate branch
-- Design and develop product page
-	- Make it look realistic-ish, but accessible the same way table is
 - Add search capability + message about turning off Fingers
+- Figure out how to allow people to go back. I believe that Table queues will save state since they only refresh when I instantiate a new Table object, which I only do at the beginning. I just don't provide an option to revert to the previous page. Should that be a special keyboard command as well? That tilda thing? <-- very possible
+The tilda thing would require me setting a permanent cell on the UI and shifting over all hover rows by a cell + margin
+This WILL NOT WORK for LinkList cells though
 
+^ I like the tilda idea, but relying on current code isn't a good solution. Perhaps I'll include a global variable that keeps track of a stack of all etsy request URIs and data so I can just pop values off when going back.
+
+Another option would be to just redo the whole shebang as a Node app again
 */
 
 
