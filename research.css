@@ -73,6 +73,8 @@ body {
 .hover-row {
 	/*float: left;*/
 	margin-bottom: calc(70px * 0.25); /* will have to rearrange based on actual keyboard layout */
+	margin-left: calc(70px * 1.25);
+	/*margin-left: calc(-70px * 0.25);*/
 	height: 70px;
 }
 
@@ -95,12 +97,16 @@ body {
 	
 }
 
+
+.hover-row:nth-child(1) {
+	/*margin-left: calc(70px * 1.25);*/
+}
 .hover-row:nth-child(2) {
-	margin-left: calc(70px * 0.25);
+	margin-left: calc(70px * 1.5);
 }
 .hover-row:nth-child(3) {
-	margin-left: calc(70px * 0.5);
+	margin-left: calc(70px * 1.75);
 }
 .hover-row:nth-child(4) {
-	margin-left: calc(70px * 0.75);
+	margin-left: calc(70px * 2);
 }

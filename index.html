@@ -9,7 +9,7 @@
 	<!-- Overlay handles 6x4 key rhombus -->
 	<div id="overlay">
 		<!-- ` -->
-		<!-- <div class="hover-row-back"></div> -->
+		<!-- <div class="back-wrapper"></div> -->
 		<!-- 1-6 -->
 		<div class="hover-row"></div>
 		<!-- Q-Y -->
@@ -51,9 +51,18 @@
 <script src="scripts/etsy.js"></script>
 <script src="scripts/main.js"></script>
 <script>
-// $(function() {
-// 	$('.hover-row-back').append(new Global().cell({name: 'Back'}));
-// })
+$(function() {
+	// $('.back-wrapper').append(new Global().cell({name: 'Back'}));
+	var global = new Global();
+	var cell = global.cell({'data-name': 'Back'});
+	cell.css({
+		'z-index': 10, 
+		'position': 'absolute',
+		'top': 0,
+		'left': 0
+	});
+	$('#overlay').append(cell)
+})
 
 </script>
 </body>
