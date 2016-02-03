@@ -17,6 +17,7 @@ Etsy.prototype.getRequest = function(purpose, uri, parameters) {
 			parameters: parameters
 		});
 	}
+	console.log(this.requestHistory)
 	// format parameters as ampersand-separated string
 	var params = '';
 	for (var key in parameters) {

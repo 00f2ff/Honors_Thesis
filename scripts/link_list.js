@@ -71,35 +71,3 @@ LinkList.prototype.right = function() {
 		$('#link_list ul').append(this.createLi(rightCell.data('name')));
 	}
 }
-
-/*
- * Adds a 'Popular Products' cell and line in first category index
- */
-LinkList.prototype.addPopularProducts = function() {
-	// move last child into inactive
-	var lastCell = $('.hover-row').first().children(':last').detach();
-	$('#link_list ul li:last-child').remove();
-	this.inactiveQueue.unshift(lastCell);
-	var attributes = {
-			'data-name': '/'
-		}
-	var firstCell = global.cell(attributes);
-	// insert cell as first child
-	$('.hover-row').first().prepend(firstCell);
-	$('#link_list ul').prepend(this.createLi('Popular Products'));
-}
-
-/*
- * Removes the 'Popular Products' cell and line
- */
-LinkList.prototype.removePopularProducts = function() {
-	// remove first cell and line
-	$('.hover-row').first().children(':first').detach();
-	$('#link_list ul li:first-child').remove();
-	// effectively perform a 'left' command without changing the previously active queue
-	var rightCell = this.inactiveQueue.shift();
-	console.log(rightCell);
-	// add cell and li to end of hover-row and <ul>
-	$('.hover-row').first().append(rightCell);
-	$('#link_list ul').append(this.createLi(rightCell.data('name')));
-}

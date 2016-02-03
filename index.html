@@ -98,6 +98,13 @@
 				table.right();
 			}
 		} else if (kc === 192) { // grave accent (back button)
+			// reset categories in base case (from first page) or going back to first page
+			if (etsy.requestHistory.length === 1 || etsy.requestHistory.length === 2) {
+				// reset categories
+				while (linkList.previouslyActiveQueue.length > 0) {
+					linkList.left();
+				}
+			}
 			if (etsy.requestHistory.length > 1) {
 				// last element of etsy.requestHistory is the current call, so pop it
 				etsy.requestHistory.pop();
@@ -105,11 +112,6 @@
 				var previousRequest = etsy.requestHistory.pop();
 				// this request will add it back into history again; next back call will remove it
 				etsy.getRequest(previousRequest.purpose, previousRequest.uri, previousRequest.parameters);
-			} else {
-				// pop last element and call initial requests
-				etsy.requestHistory.pop();
-				etsy.getRequest('listings', 'listings/trending', {'limit': 30});
-				// etsy.getRequest('categories', 'taxonomy/categories', {});
 			}
 		}
 		// cancel speech because cell won't contain same content
@@ -135,18 +137,7 @@
 	 */
 	function activateCategoryCell(kc) {
 		var cell = $('.hover-row:first-child .cell:nth-child('+(1+linkListKeyCodes.indexOf(kc))+')');
-		console.log(cell);
-		if (cell.data('name') === '/') {
-			// call the 'Popular Products' removal function in LinkedList
-			linkList.removePopularProducts();
-			etsy.getRequest('listings', 'listings/trending', {'limit': 30});
-		} else {
-			// check if popular products is already shown
-			if ($('.hover-row').first().children(':first').data('name') !== '/') {
-				linkList.addPopularProducts();
-			}
-			etsy.getRequest('listings', 'listings/active', {'limit': 30, 'category': $(this).data('name')});
-		}
+		etsy.getRequest('listings', 'listings/active', {'limit': 30, 'category': cell.data('name')});
 	}
 
 
