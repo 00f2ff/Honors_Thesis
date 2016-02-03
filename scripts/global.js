@@ -23,13 +23,10 @@ Global.prototype.cell = function(attributes) {
 		.on('mouseover', function() {
 			$(this).css('background-color', 'yellow');
 			// Read out information depending on type of cell
-			console.log(that);
+			// console.log(that);
+			console.log($(this))
 			if ($(this).attr('data-name')) { // LinkList
-				if ($(this).data('name') === '/') {
-					that.msg.text = 'Popular Products';
-				} else {
-					that.msg.text = $(this).data('name');
-				}
+				that.msg.text = $(this).data('name');
 			} else if ($(this).data('title')) { // Table
 				that.msg.text = $(this).data('title') + '  ' + $(this).data('price');
 			} else if ($(this).data('text')) {
