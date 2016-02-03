@@ -89,12 +89,3 @@ function activateCategoryCell(kc) {
 	var cell = $('.hover-row:first-child .cell:nth-child('+(1+linkListKeyCodes.indexOf(kc))+')');
 	etsy.getRequest('listings', 'listings/active', {'limit': 30, 'category': cell.data('name')});
 }
-
-
-/* 
-To Do:
-
-- Check whether pressing certain Fingers keys changes how the software operates while people interact with my application. If it does, read Fingers code and change those key bindings in a separate branch
-- Add search capability + message about turning off Fingers
-
-*/
