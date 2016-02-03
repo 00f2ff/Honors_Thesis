@@ -49,7 +49,6 @@
 <script src="scripts/etsy.js"></script>
 <script>
 
-
 	var etsy = new Etsy();
 	etsy.getRequest('listings', 'listings/trending', {'limit': 30});
 	etsy.getRequest('categories', 'taxonomy/categories', {});
@@ -97,6 +96,20 @@
 				linkList.right();
 			} else if ($('.hover-row:not(:first-child):hover').length > 0 && isTable) {
 				table.right();
+			}
+		} else if (kc === 192) { // grave accent (back button)
+			if (etsy.requestHistory.length > 1) {
+				// last element of etsy.requestHistory is the current call, so pop it
+				etsy.requestHistory.pop();
+				// previous call from this page is now last element, so send new request with popped element
+				var previousRequest = etsy.requestHistory.pop();
+				// this request will add it back into history again; next back call will remove it
+				etsy.getRequest(previousRequest.purpose, previousRequest.uri, previousRequest.parameters);
+			} else {
+				// pop last element and call initial requests
+				etsy.requestHistory.pop();
+				etsy.getRequest('listings', 'listings/trending', {'limit': 30});
+				// etsy.getRequest('categories', 'taxonomy/categories', {});
 			}
 		}
 		// cancel speech because cell won't contain same content

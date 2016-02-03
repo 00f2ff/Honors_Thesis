@@ -4,9 +4,19 @@ var productTable = new ProductTable();
 
 function Etsy() {
 	this.queryBase = 'https://openapi.etsy.com/v2/';
+	// Each time an etsy request is made, add {purpose: __, uri: __, parameters: __} to history for ability to go back
+	this.requestHistory = [];
 }
 
 Etsy.prototype.getRequest = function(purpose, uri, parameters) {
+	// don't push category request to history
+	if (purpose !== 'categories') {
+		this.requestHistory.push({
+			purpose: purpose,
+			uri: uri,
+			parameters: parameters
+		});
+	}
 	// format parameters as ampersand-separated string
 	var params = '';
 	for (var key in parameters) {
