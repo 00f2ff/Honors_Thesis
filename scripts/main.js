@@ -2,13 +2,14 @@
 var etsy = new Etsy();
 etsy.getRequest('listings', 'listings/trending', {'limit': 30});
 
-// todo: add keydown (non search) handling for space (32) and enter (13) when focus is on a product
-
+// NOTE: pressing space also has default behavior of bringing down page, but that shouldn't matter
 
 $('body').keydown(function(e) {
 	var kc = e.keyCode;
 	
 	var isSearch = $('#search input:focus').length;
+	var isCategory = $('li:focus').length;
+	var isProduct = $('.product:focus').length;
 
 	// all key functionality doesn't hold for typing in search box
 	if (!isSearch) {
@@ -24,6 +25,10 @@ $('body').keydown(function(e) {
 			}
 		} else if (kc === 16) { // press shift to set focus to search bar
 			$('#search input').focus();
+		} else if (isProduct && (kc === 32 || kc === 13)) { // is product and space or enter
+			etsy.getRequest('product', 'listings/'+$(document.activeElement).data('listing_id'), {});
+		} else if (isCategory && (kc === 32 || kc === 13)) { // is category and space or enter
+			etsy.getRequest('listings', 'listings/active', {'limit': 30, 'category': $(document.activeElement).data('name')});
 		}
 	} else {
 		if (kc === 13) { // enter to search
