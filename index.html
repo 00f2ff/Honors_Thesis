@@ -5,18 +5,6 @@
 	<link rel="stylesheet" type="text/css" href="research.css">
 </head>
 <body>
-
-	<!-- Overlay handles 6x4 key rhombus -->
-	<div id="overlay">
-		<!-- 1-6 -->
-		<div class="hover-row"></div>
-		<!-- Q-Y -->
-		<div class="hover-row"></div>
-		<!-- A-H -->
-		<div class="hover-row"></div>
-		<!-- Z-N -->
-		<div class="hover-row"></div>
-	</div>
 	<div id="search">
 		<div id="title">Shopping</div>
 		<div id="search-bar">
@@ -40,8 +28,7 @@
 		</div>
 		<!-- table -->
 		<div id="table">
-		<!-- Will be different for Home / Suggestion vs Product -->
-			<!-- I found that sites like Amazon and Etsy never show more than 3 products per row, so I'm going to reverse rows and columns; Q, A and Z will access indexes 0, 1 and 2, respectively, and hovering over keys to the right will show products farther down the page -->			
+		
 		</div>
 	</div>
 
@@ -56,17 +43,6 @@
 <script src="scripts/etsy.js"></script>
 <script src="scripts/main.js"></script>
 <script>
-$(function() {
-	var global = new Global();
-	var cell = global.cell({'data-name': 'Back'});
-	cell.css({
-		'z-index': 10, 
-		'position': 'absolute',
-		'top': 0,
-		'left': 0
-	});
-	$('#overlay').append(cell)
-})
 
 
 /* 
