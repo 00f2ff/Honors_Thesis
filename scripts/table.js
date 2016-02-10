@@ -1,12 +1,16 @@
-// initialize helper class
-var global = new Global();
 
 function Table() {
 	
 }
 
-Table.prototype.populate = function(products) {
-	// order is thus a non-rotated version of Fingers code
+Table.prototype.populate = function(unformattedProducts) {
+	var products = [];
+	for (var i = 0; i < unformattedProducts.length; i++) {
+		if (i % 3 === 0) {
+			products.push([]);
+		}
+		products[products.length-1].push(unformattedProducts[i]);
+	}
 	this.products = products;
 	this.generateUI();
 }

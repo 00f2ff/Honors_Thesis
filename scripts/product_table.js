@@ -1,4 +1,3 @@
-var global = new Global();
 
 function ProductTable() {
 

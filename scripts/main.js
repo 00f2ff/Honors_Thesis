@@ -2,6 +2,8 @@
 var etsy = new Etsy();
 etsy.getRequest('listings', 'listings/trending', {'limit': 30});
 
+// todo: add keydown (non search) handling for space (32) and enter (13) when focus is on a product
+
 
 $('body').keydown(function(e) {
 	var kc = e.keyCode;

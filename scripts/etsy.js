@@ -1,4 +1,3 @@
-var linkList = new LinkList();
 var table = new Table();
 var productTable = new ProductTable();
 
