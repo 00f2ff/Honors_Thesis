@@ -10,10 +10,9 @@ function ProductTable() {
 ProductTable.prototype.generateUI = function() {
 	// clear old table view
 	$('#table').empty();
-	$('.hover-row:not(:first-child)').empty();
 	// loop through data and add to DOM
 	var keys = Object.keys(this.productData);
-	var element, attributes, cell;
+	var element, attributes;
 	for (var i = 0; i < keys.length; i++) {
 		if (keys[i] === 'title') {
 			element = $('<h1>'+this.productData[keys[i]]+'</h1>')
@@ -21,12 +20,6 @@ ProductTable.prototype.generateUI = function() {
 			element = $('<p>'+this.productData[keys[i]]+'</p>')
 		}
 		$('#table').append(element);
-		// add cell
-		attributes = {
-			'data-text': this.productData[keys[i]]
-		}
-		var cell = global.cell(attributes);
-		$('.hover-row:nth-child(2)').append(cell);
 	}
 }
 
