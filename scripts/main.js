@@ -23,8 +23,6 @@ $('body').keydown(function(e) {
 				// this request will add it back into history again; next back call will remove it
 				etsy.getRequest(previousRequest.purpose, previousRequest.uri, previousRequest.parameters);
 			}
-		} else if (kc === 16) { // press shift to set focus to search bar
-			$('#search input').focus();
 		} else if (isProduct && (kc === 32 || kc === 13)) { // is product and space or enter
 			etsy.getRequest('product', 'listings/'+$(document.activeElement).data('listing_id'), {});
 		} else if (isCategory && (kc === 32 || kc === 13)) { // is category and space or enter
