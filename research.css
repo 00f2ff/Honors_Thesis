@@ -72,21 +72,25 @@ body {
 
 .hover-row {
 	/*float: left;*/
-	margin-bottom: calc(70px * 0.25); /* will have to rearrange based on actual keyboard layout */
-	margin-left: calc(70px * 1.25);
+	margin-bottom: calc(140px * 0.45);
+	margin-left: calc(140px * 1.22 - 60px);
 	/*margin-left: calc(-70px * 0.25);*/
-	height: 70px;
+	height: 100px;
 }
 
 .cell {
 	float: left;
-	margin-right: calc(70px * 0.25);
-	height: 70px;
-	width: 70px;
+	margin-right: calc(140px * .25);
+	height: 100px;
+	width: 140px;
 	background-color: blue;
 	opacity: 0.05;
-	line-height: 70px;
+	line-height: 100px;
 	text-align: center;
+}
+
+.hover-row .cell:last-of-type {
+	margin-right: 0px;
 }
 
 .invisible {
@@ -102,11 +106,11 @@ body {
 	/*margin-left: calc(70px * 1.25);*/
 }
 .hover-row:nth-child(2) {
-	margin-left: calc(70px * 1.5);
+	margin-left: calc(140px * 1.6);
 }
 .hover-row:nth-child(3) {
-	margin-left: calc(70px * 1.75);
+	margin-left: calc(140px * 1.9);
 }
 .hover-row:nth-child(4) {
-	margin-left: calc(70px * 2);
+	margin-left: calc(140px * 2.35);
 }
