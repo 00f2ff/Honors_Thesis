@@ -40,12 +40,6 @@ $('body').keydown(function(e) {
 			}
 		} else if (kc === 192) { // grave accent (back button)
 			// reset categories in base case (from first page) or going back to first page
-			if (etsy.requestHistory.length === 1 || etsy.requestHistory.length === 2) {
-				// reset categories
-				while (linkList.previouslyActiveQueue.length) {
-					linkList.left();
-				}
-			}
 			if (etsy.requestHistory.length > 1) {
 				// last element of etsy.requestHistory is the current call, so pop it
 				etsy.requestHistory.pop();
