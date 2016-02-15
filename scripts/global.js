@@ -11,10 +11,6 @@ function Global() {
 	this.msg = msg
 }
 
-// NOTE: checking will need to change based on product table
-// as each cell will have a different data-attribute.
-// potential solutions include adding another product-specific
-// data-attribute or class to pt cells
 Global.prototype.cell = function(attributes) {
 	var cell = $('<div class="cell"></div>');
 	// assumes attributes come in prefixed with 'data-'

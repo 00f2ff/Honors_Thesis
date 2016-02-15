@@ -97,8 +97,6 @@ function activateNextPageCell() {
 			newParameters[oldKeys[i]] = lastRequest.parameters[oldKeys[i]];
 		}
 	}
-	console.log(Object.keys(lastRequest.parameters));
-	console.log(newParameters);
 	etsy.getRequest(lastRequest.purpose, lastRequest.uri, newParameters);
 }
 
