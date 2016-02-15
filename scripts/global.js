@@ -21,19 +21,22 @@ Global.prototype.cell = function(attributes) {
 	var that = this;
 	cell.attr(attributes)
 		.on('mouseover', function() {
-			$(this).css('background-color', 'yellow');
-			// Read out information depending on type of cell
-			// console.log(that);
-			console.log($(this))
-			if ($(this).attr('data-name')) { // LinkList
-				that.msg.text = $(this).data('name');
-			} else if ($(this).data('title')) { // Table
-				that.msg.text = $(this).data('title') + '  ' + $(this).data('price');
-			} else if ($(this).data('text')) {
-				that.msg.text = $(this).data('text');
+			// only highlight and read cells when search is not focused
+			if (!$('#search input:focus').length) {
+				$(this).css('background-color', 'yellow');
+				// Read out information depending on type of cell
+				// console.log(that);
+				console.log($(this))
+				if ($(this).attr('data-name')) { // LinkList
+					that.msg.text = $(this).data('name');
+				} else if ($(this).data('title')) { // Table
+					that.msg.text = $(this).data('title') + '  ' + $(this).data('price');
+				} else if ($(this).data('text')) {
+					that.msg.text = $(this).data('text');
+				}
+				speechSynthesis.speak(that.msg);
+				console.log(that.msg);
 			}
-			speechSynthesis.speak(that.msg);
-			console.log(that.msg);
 		}).on('mouseout', function() {
 			$(this).css('background-color', 'blue');
 			// cancel speech
