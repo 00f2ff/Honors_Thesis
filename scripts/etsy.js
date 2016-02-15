@@ -36,9 +36,6 @@ Etsy.prototype.getRequest = function(purpose, uri, parameters) {
 					case 'listings':
 						table.populate(data.results);
 						break;
-					case 'categories':
-						linkList.populate(data.results);
-						break;
 					case 'product':
 						productTable.populate(data.results[0]); // comes in array
 						break;

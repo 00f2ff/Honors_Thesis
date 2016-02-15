@@ -35,7 +35,7 @@ Global.prototype.cell = function(attributes) {
 					that.msg.text = $(this).data('text');
 				}
 				speechSynthesis.speak(that.msg);
-				console.log(that.msg);
+				console.log(that.msg.text);
 			}
 		}).on('mouseout', function() {
 			$(this).css('background-color', 'blue');

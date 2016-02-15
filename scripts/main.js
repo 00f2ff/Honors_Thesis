@@ -1,7 +1,7 @@
 
 var etsy = new Etsy();
 etsy.getRequest('listings', 'listings/trending', {'limit': 30});
-etsy.getRequest('categories', 'taxonomy/categories', {});
+// etsy.getRequest('categories', 'taxonomy/categories', {});
 // etsy.getRequest('listings', 'listings/active', {'limit': 30, 'category': 'candles'});
 
 // etsy.getRequest('sub-categories', 'taxonomy/categories/accessories', {});
