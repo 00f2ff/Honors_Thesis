@@ -1,12 +1,13 @@
 
 var etsy = new Etsy();
-etsy.getRequest('listings', 'listings/trending', {'limit': 30});
+etsy.getRequest('listings', 'listings/trending', {'limit': 18, 'offset': 0});
 
 // Keycode arrays. Index of key corresponds with index of cell in hover-row
 var linkListKeyCodes = [49,50,51,52,53,54];
 var tableFirstColumnKeyCodes = [81,87,69,82,84,89];
 var tableSecondColumnKeyCodes = [65,83,68,70,71,72];
 var tableThirdColumnKeyCodes = [90,88,67,86,66,78];
+var nextProductPageKeyCodes = [85,74,77];
 
 
 // Assigns click handler to cells (effect differs based on cell type)
@@ -28,16 +29,8 @@ $('body').keydown(function(e) {
 			activateTableCell(kc, 3);
 		} else if (tableThirdColumnKeyCodes.indexOf(kc) > -1 && isNotProductTable) {
 			activateTableCell(kc, 4);
-		} else if (kc === 37) { // left arrow
-			// Find which row is currently hovered over
-			// participants will need instruction on how hovering + arrow keys work
-			if ($('.hover-row:not(:first-child):hover').length && isNotProductTable) { // table
-				table.left();
-			}
-		} else if (kc === 39) { // right arrow
-			if ($('.hover-row:not(:first-child):hover').length && isNotProductTable) {
-				table.right();
-			}
+		} else if (nextProductPageKeyCodes.indexOf(kc) > -1 && isNotProductTable) {
+			activateNextPageCell();
 		} else if (kc === 192) { // grave accent (back button)
 			// reset categories in base case (from first page) or going back to first page
 			if (etsy.requestHistory.length > 1) {
@@ -56,7 +49,7 @@ $('body').keydown(function(e) {
 			var searchString = $('#search input').val().replace(/\s+/g, '%20');
 			console.log(searchString);
 			$('#search input').val('');
-			etsy.getRequest('listings', 'listings/active', {'limit': 30, 'keywords': searchString});
+			etsy.getRequest('listings', 'listings/active', {'limit': 18, 'offset': 0, 'keywords': searchString});
 			// remove focus from input so user can use site again
 			$('#search input').blur();
 		} else if (kc === 16) { // press shift again to unfocus search
@@ -87,7 +80,26 @@ function activateTableCell(kc, nthChild) {
  */
 function activateCategoryCell(kc) {
 	var cell = $('.hover-row:first-child .cell:nth-child('+(1+linkListKeyCodes.indexOf(kc))+')');
-	etsy.getRequest('listings', 'listings/active', {'limit': 30, 'category': cell.data('name')});
+	etsy.getRequest('listings', 'listings/active', {'limit': 18, 'offset': 0, 'category': cell.data('name')});
+}
+
+function activateNextPageCell() {
+	// send previous Etsy request with an updated offset
+	var lastRequest = etsy.requestHistory[etsy.requestHistory.length-1];
+	// create copy of last parameters
+	var newParameters = {}
+	var oldKeys = Object.keys(lastRequest.parameters);
+	for (var i = 0; i < oldKeys.length; i++) {
+		newParameters[oldKeys[i]] = lastRequest.parameters[oldKeys[i]];
+		if (oldKeys[i] === 'offset') {
+			newParameters[oldKeys[i]] = lastRequest.parameters[oldKeys[i]] + 18;
+		} else {
+			newParameters[oldKeys[i]] = lastRequest.parameters[oldKeys[i]];
+		}
+	}
+	console.log(Object.keys(lastRequest.parameters));
+	console.log(newParameters);
+	etsy.getRequest(lastRequest.purpose, lastRequest.uri, newParameters);
 }
 
 

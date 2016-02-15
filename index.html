@@ -80,12 +80,22 @@ To Do:
 
 -In KSI code, turn off clicking with space since that and tab stay active when Fingers is out of focus. Other keys are ok though. If I turn off space, then when users go into a search window, as long as my code turns off hover handlers (so have a conditional about the state of search focus inside of the hover handlers themselves) users won’t need to turn off Fingers, which would be super inconvenient. 
 - Test out search feature with Fingers on. See if it really changes anything. Space bar might throw things off. See if there's a way to modify that.	
-- If space in virtual UI, add a message to U, J and M alerting user of "next page"
 - Add click handler for U, J and M to go to next page
 - Modify code to allow "next page" for products (may involve a limit of 18, then an offset for the next query if I want to keep the code more manageable)
 	- Or just remove the use of queues and shift which products are covered by table cells
 	- ^ Would be wayyyyy simpler
 - Remove arrow key code
+
+Arrow key removal plan:
+Instead of arrow keys, I'm just going to have different pages of products. These pages will be determined using a limit of 18 and an offset which increases by 18 each time U, J or M is pressed, and decreases by 18 each time ` is pressed (as long as it is currently > 0).
+Each time U, J or M is pressed, an Etsy request will be launched
+
+
+
+
+
+
+- Buy plug-in speakers compatible with Fedora
 
 */
 
