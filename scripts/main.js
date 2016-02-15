@@ -77,6 +77,8 @@ $('body').keydown(function(e) {
 			etsy.getRequest('listings', 'listings/active', {'limit': 30, 'keywords': searchString});
 			// remove focus from input so user can use site again
 			$('#search input').blur();
+		} else if (kc === 16) { // press shift again to unfocus search
+			$('#search input').blur();
 		}
 	}
 	

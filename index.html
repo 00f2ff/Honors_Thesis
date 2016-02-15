@@ -65,10 +65,13 @@ $(function() {
 
 
 /* 
+
+DO NOT MODIFY CSS. THIS IS TAILORED FOR MY FEDORA MACHINE!!!
+
+
 To Do:
 
-- Check whether pressing certain Fingers keys changes how the software operates while people interact with my application. If it does, read Fingers code and change those key bindings in a separate branch
-- Think about adding 'page loaded' message on success in Etsy class since there's a small delay
+-In KSI code, turn off clicking with space since that and tab stay active when Fingers is out of focus. Other keys are ok though. If I turn off space, then when users go into a search window, as long as my code turns off hover handlers (so have a conditional about the state of search focus inside of the hover handlers themselves) users won’t need to turn off Fingers, which would be super inconvenient. 
 - Modify code so that when search bar is being hovered on, cell pressing AND hovering is turned off
 - Test out search feature with Fingers on. See if it really changes anything. Space bar might throw things off. See if there's a way to modify that.	
 - If space in virtual UI, add a message to U, J and M alerting user of "next page"
@@ -76,7 +79,6 @@ To Do:
 - Modify code to allow "next page" for products (may involve a limit of 18, then an offset for the next query if I want to keep the code more manageable)
 	- Or just remove the use of queues and shift which products are covered by table cells
 	- ^ Would be wayyyyy simpler
-- Modify cell CSS to fit video (reflect it though)
 - Remove arrow key code
 
 */
