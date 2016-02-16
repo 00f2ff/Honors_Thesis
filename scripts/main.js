@@ -8,12 +8,17 @@ var tableFirstColumnKeyCodes = [81,87,69,82,84,89];
 var tableSecondColumnKeyCodes = [65,83,68,70,71,72];
 var tableThirdColumnKeyCodes = [90,88,67,86,66,78];
 var nextProductPageKeyCodes = [85,74,77];
+var disabledKeys = [9,37,38,39,40,93]; // 93 is like right-clicking
 
 
 // Assigns click handler to cells (effect differs based on cell type)
 $('body').keydown(function(e) {
 	// find which hover-row had a cell pressed
 	var kc = e.keyCode;
+	// prevent default behavior for tab and arrow press
+	if (disabledKeys.indexOf(kc) > -1) {
+		e.preventDefault();	
+	}
 	// find out whether UI is showing Table or ProductTable (because no arrow control / activation on latter)
 	// AND is located on select conditionals (does not apply to LinkList)
 	var isNotProductTable = $('.hover-row:nth-child(3)').children().length;
@@ -43,6 +48,8 @@ $('body').keydown(function(e) {
 			}
 		} else if (kc === 16) { // press shift to set focus to search bar
 			$('#search input').focus();
+		} else if (kc === 32) { // prevent default behavior of spacebar to scroll down page
+			e.preventDefault();
 		}
 	} else {
 		if (kc === 13) { // enter to search
