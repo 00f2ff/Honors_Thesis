@@ -19,7 +19,7 @@ Table.prototype.createProduct = function(title, price, listing_id) {
 	// add assistive help for locating product
 	return $('<div class="product" tabindex="0" role="button" data-listing_id='+listing_id+'> \
 				<div class="product-name">'+title+'</div> \
-				<div class="product-price">'+price+'</div> \
+				<div class="product-price">$'+price+'</div> \
 			</div>');
 }
 
