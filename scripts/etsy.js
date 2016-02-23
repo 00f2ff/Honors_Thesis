@@ -34,9 +34,15 @@ Etsy.prototype.getRequest = function(purpose, uri, parameters) {
 				switch (purpose) {
 					case 'listings':
 						table.populate(data.results);
+						// add next-page button if not already present
+						if (!$('#next-page').length) {
+							$('body').append('<div id="next-page" tabindex="0" role="button">Next Page</div>')
+						}
 						break;
 					case 'product':
 						productTable.populate(data.results[0]); // comes in array
+						// remove next-page button
+						$('#next-page').detach();
 						break;
 					default:
 						console.log('Not a valid purpose');

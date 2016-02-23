@@ -110,3 +110,12 @@ body {
 .hover-row:nth-child(4) {
 	margin-left: calc(70px * 2);
 }
+
+#next-page {
+	margin: 2050px auto 50px auto;
+	height: 200px;
+	width: 200px;
+	line-height: 200px;
+	text-align: center;
+	background-color: orange;
+}
